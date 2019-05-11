@@ -109,9 +109,9 @@
         for (index = 0; index < numero.value; index++) {
             if (ePrimo(index) == true) {
                 numerosPrimos.push(index);
-                numerosAtePrimo.push(numerosPrimos.length)
                 console.log(index + " é primo");
             }
+            numerosAtePrimo.push(numerosPrimos.length);
         }
 
         TxtNumerosPrimos.innerHTML = numerosPrimos;
@@ -126,6 +126,14 @@
             M.toast({ html: 'Nulo! Insira um valor' })
         }
 
+        var numerosLabels = [];
+
+        for(var i = 1; i <= numero.value; i++) {
+            numerosLabels.push(i);
+            console.log("Push " + i + " nhã" + numerosLabels);
+            console.log("Para " + i + " tem " + numerosAtePrimo[i] + "numeros até primo")
+        }
+
         // TODO: CONSERTAR ESSA MERDA
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
@@ -134,17 +142,23 @@
 
             // The data for our dataset
             data: {
-                labels: [...Array(numerosPrimos.length).keys()],
+                labels: numerosLabels,
                 datasets: [{
-                    label: 'Números primos',
+                    label: 'Números primos até o número',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [...Array(numerosAtePrimo.length).keys()]
+                    data: numerosAtePrimo
                 }]
             },
 
             // Configuration options go here
-            options: {}
+            options: {
+                elements: {
+                    line: {
+                        tension: 0 // disables bezier curves
+                    }
+                }       
+            }
         });
     }
 
