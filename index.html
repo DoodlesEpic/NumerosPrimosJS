@@ -43,13 +43,20 @@
                         <strong>Cuidado ao calcular números com mais de 5 algarismos! O tempo de execução pode passar de
                             20 segundos e congelar a navegação.</strong>
                     </blockquote>
-                    <p>
+                    <label>Opções</label>
+                    <div style="margin-top: 20px;">
                         <label>
                             <input type="checkbox" checked="checked" onchange="toggleSegurança()" />
                             <span id="limiteSegurancaLabel">Ativar limite de segurança de 5 dígitos</span>
                         </label>
-                    </p>
-                    <a onclick="calcularPrimos()" id="botao" style="margin-top: 30px; margin-bottom: 10px"
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <label>
+                            <input id="graficoCheckbox" type="checkbox" checked="checked" onchange="toggleGrafico()" />
+                            <span id="graficoLabel">Gerar gráfico</span>
+                        </label>
+                    </div>
+                    <a onclick="calcularPrimos()" id="botao" style="margin-top: 20px; margin-bottom: 10px"
                         class="btn">Calcular!</a>
                     <p>Os números primos até aqui são: </p>
                     <p id="numeros_primos" class="break-text">0</p>
@@ -77,24 +84,35 @@
 
 <script>
     let maxlength = 5;
+    let fazerGrafico = true;
     let numero = document.getElementById("numero");
     let TxtNumerosPrimos = document.getElementById("numeros_primos");
     let TxtNumerosPrimosQuantos = document.getElementById("numeros_primos_quantos");
 
     function toggleSegurança() {
-        let segurancaLabel = document.getElementById("limiteSegurancaLabel")
-        let botao = document.getElementById("botao")
+        let segurancaLabel = document.getElementById("limiteSegurancaLabel");
+        let graficoLabel = document.getElementById("graficoLabel");
+        let graficoCheckbox = document.getElementById("graficoCheckbox");
+        let botao = document.getElementById("botao");
         if (maxlength == 5) {
             maxlength = 32;
             segurancaLabel.classList.add("red-text");
+            graficoLabel.classList.add("red-text");
             botao.classList.add("red");
+            graficoCheckbox.checked = false;
         } else {
             maxlength = 5;
             if (numero.value.length > maxlength) numero.value = numero.value.slice(0, maxlength);
             segurancaLabel.classList.remove("red-text");
+            graficoLabel.classList.remove("red-text");
             botao.classList.remove("red");
         }
     }
+
+    function toggleGrafico() {
+        fazerGrafico = document.getElementById('graficoCheckbox').checked;
+    }
+    
 
     function checkInputLength() {
         if (numero.value.length > maxlength) numero.value = numero.value.slice(0, maxlength);
@@ -106,12 +124,21 @@
 
         let numerosPrimos = []
         let numerosAtePrimo = []
-        for (index = 0; index < numero.value; index++) {
-            if (ePrimo(index) == true) {
-                numerosPrimos.push(index);
-                console.log(index + " é primo");
+        if(fazerGrafico) {
+            for (index = 0; index < numero.value; index++) {
+                if (ePrimo(index) == true) {
+                    numerosPrimos.push(index);
+                    console.log(index + " é primo");
+                }
+                numerosAtePrimo.push(numerosPrimos.length);
             }
-            numerosAtePrimo.push(numerosPrimos.length);
+        } else {
+            for (index = 0; index < numero.value; index++) {
+                if (ePrimo(index) == true) {
+                    numerosPrimos.push(index);
+                    console.log(index + " é primo");
+                }
+            }
         }
 
         TxtNumerosPrimos.innerHTML = numerosPrimos;
@@ -126,40 +153,42 @@
             M.toast({ html: 'Nulo! Insira um valor' })
         }
 
-        var numerosLabels = [];
+        if(fazerGrafico) {
+            var numerosLabels = [];
 
-        for(var i = 1; i <= numero.value; i++) {
-            numerosLabels.push(i);
-            console.log("Push " + i + " nhã" + numerosLabels);
-            console.log("Para " + i + " tem " + numerosAtePrimo[i] + "numeros até primo")
-        }
-
-        // TODO: CONSERTAR ESSA MERDA
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-
-            // The data for our dataset
-            data: {
-                labels: numerosLabels,
-                datasets: [{
-                    label: 'Números primos até o número',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: numerosAtePrimo
-                }]
-            },
-
-            // Configuration options go here
-            options: {
-                elements: {
-                    line: {
-                        tension: 0 // disables bezier curves
-                    }
-                }       
+            for(var i = 1; i <= numero.value; i++) {
+                numerosLabels.push(i);
+                console.log("Push " + i + " nhã" + numerosLabels);
+                console.log("Para " + i + " tem " + numerosAtePrimo[i] + "numeros até primo")
             }
-        });
+
+            // TODO: CONSERTAR ESSA MERDA
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: numerosLabels,
+                    datasets: [{
+                        label: 'Números primos até o número',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: numerosAtePrimo
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    elements: {
+                        line: {
+                            tension: 0 // disables bezier curves
+                        }
+                    }       
+                }
+            });
+        }
     }
 
     function ePrimo(numero) {
