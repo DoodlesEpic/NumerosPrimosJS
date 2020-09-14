@@ -128,7 +128,6 @@
             for (index = 0; index < numero.value; index++) {
                 if (ePrimo(index) == true) {
                     numerosPrimos.push(index);
-                    console.log(index + " é primo");
                 }
                 numerosAtePrimo.push(numerosPrimos.length);
             }
@@ -136,7 +135,6 @@
             for (index = 0; index < numero.value; index++) {
                 if (ePrimo(index) == true) {
                     numerosPrimos.push(index);
-                    console.log(index + " é primo");
                 }
             }
         }
@@ -158,8 +156,6 @@
 
             for(var i = 1; i <= numero.value; i++) {
                 numerosLabels.push(i);
-                console.log("Push " + i + " nhã" + numerosLabels);
-                console.log("Para " + i + " tem " + numerosAtePrimo[i] + "numeros até primo")
             }
 
             var ctx = document.getElementById('myChart').getContext('2d');
@@ -193,9 +189,6 @@
     function ePrimo(numero) {
         for (i = 2; i < numero; i++) {
             if (numero % i == 0) {
-                console.log("conta: " + numero % i);
-                console.log("i: " + i);
-                console.log("numero: " + i);
                 return false;
             }
         }
