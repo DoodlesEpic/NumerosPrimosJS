@@ -164,7 +164,7 @@ function desenharGrafico(numero, numerosAtePrimo) {
 
 // Verifica se o número é primo
 function ePrimo(numero) {
-  for (let i = 2; i < numero; i++) {
+  for (let i = 2; i <= Math.sqrt(numero); i++) {
     if (numero % i == 0) {
       return false;
     }
