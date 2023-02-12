@@ -1,5 +1,5 @@
 import "./style.scss";
-import M from "@materializecss/materialize";
+import { Toast, toast } from "@materializecss/materialize";
 import {
   Chart,
   LineController,
@@ -78,9 +78,9 @@ function checkInputLength() {
 
 function calcularPrimos() {
   if (numero.value < 0)
-    return M.toast({ text: "Negativo! Insira um número positivo" });
+    return toast({ text: "Negativo! Insira um número positivo" });
 
-  M.Toast.dismissAll();
+  Toast.dismissAll();
   const inicioCalculo = new Date();
 
   // Dois é o único primo par, então fica prefixado
@@ -107,17 +107,17 @@ function calcularPrimos() {
   NumerosPrimosTxt.innerHTML = numerosPrimos;
 
   if (numerosPrimos.length > 0) {
-    M.toast({
+    toast({
       text: "Calculados " + numerosPrimos.length + " números primos!",
     });
-    M.toast({
+    toast({
       text:
         "Tempo de execução: " +
         (fimCalculo - inicioCalculo) / 1000 +
         " segundos",
     });
   } else {
-    M.toast({ text: "Nulo! Insira um valor" });
+    toast({ text: "Nulo! Insira um valor" });
   }
 
   if (fazerGrafico) {
