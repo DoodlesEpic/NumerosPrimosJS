@@ -1,6 +1,21 @@
 import "./style.scss";
 import M from "@materializecss/materialize";
-import Chart from "chart.js/auto";
+import {
+  Chart,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from "chart.js";
+
+Chart.register(
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
 // DOM
 const numero = document.querySelector("#numero");
