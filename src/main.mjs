@@ -28,7 +28,7 @@ const graficoLabel = document.querySelector("#graficoLabel");
 const botao = document.querySelector("#botao");
 
 // Event binds
-numero.addEventListener("input", checkInputLength);
+numero.addEventListener("input", limitarInput);
 calculoBtn.addEventListener("click", calcularPrimos);
 graficoCheckbox.addEventListener("change", toggleGrafico);
 segurancaCheckbox.addEventListener("change", toggleSegurança);
@@ -50,7 +50,7 @@ function toggleSegurança() {
 
   graficoCheckbox.checked = false;
   maxlength = maxlength === 5 ? 32 : 5;
-  numero.value = numero.value.slice(0, maxlength);
+  limitarInput();
 }
 
 // Alterna a exibição do gráfico
@@ -60,9 +60,8 @@ function toggleGrafico() {
 
 // Limita o número a calcular para o número de dígitos
 // O valor depende de o limite de segurança estar ativado ou não
-function checkInputLength() {
-  if (numero.value.length > maxlength)
-    numero.value = numero.value.slice(0, maxlength);
+function limitarInput() {
+  numero.value = numero.value.slice(0, maxlength);
 }
 
 function calcularPrimos() {
