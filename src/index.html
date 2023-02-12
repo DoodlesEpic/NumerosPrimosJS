@@ -8,14 +8,6 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.2.1/dist/css/materialize.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.2.1/dist/js/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
   </head>
   <body>
     <main>
@@ -24,7 +16,7 @@
           <div class="card-content">
             <span class="card-title">Calcule os números primos</span>
             <div class="input-field col s6">
-              <input id="numero" type="number" oninput="checkInputLength()" />
+              <input id="numero" type="number" />
               <label for="numero">Número</label>
             </div>
             <blockquote class="red-text">
@@ -40,7 +32,7 @@
                 <input
                   type="checkbox"
                   checked="checked"
-                  onchange="toggleSegurança()"
+                  id="segurancaCheckbox"
                 />
                 <span id="limiteSegurancaLabel"
                   >Ativar limite de segurança de 5 dígitos</span
@@ -49,16 +41,11 @@
             </div>
             <div style="margin-top: 20px">
               <label>
-                <input
-                  id="graficoCheckbox"
-                  type="checkbox"
-                  checked="checked"
-                  onchange="toggleGrafico()"
-                />
+                <input id="graficoCheckbox" type="checkbox" checked="checked" />
                 <span id="graficoLabel">Gerar gráfico</span>
               </label>
             </div>
-            <a onclick="calcularPrimos()" id="botao" class="btn">Calcular!</a>
+            <a id="botao" class="btn">Calcular!</a>
             <p>Os números primos até aqui são:</p>
             <p id="numeros_primos" class="break-text">0</p>
           </div>
@@ -84,6 +71,6 @@
         </div>
       </div>
     </footer>
-    <script src="main.js"></script>
+    <script type="module" src="/main.mjs"></script>
   </body>
 </html>

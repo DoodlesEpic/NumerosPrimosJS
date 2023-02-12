@@ -1,10 +1,22 @@
+import "./style.scss";
+import M from "@materializecss/materialize";
+import Chart from "chart.js/auto";
+
 // DOM
 const numero = document.querySelector("#numero");
-const TxtNumerosPrimos = document.querySelector("#numeros_primos");
-const TxtNumerosPrimosQuantos = document.querySelector(
+const calculoBtn = document.querySelector("#botao");
+const NumerosPrimosTxt = document.querySelector("#numeros_primos");
+const NumerosPrimosQuantosTxt = document.querySelector(
   "#numeros_primos_quantos"
 );
 const graficoCheckbox = document.querySelector("#graficoCheckbox");
+const segurancaCheckbox = document.querySelector("#segurancaCheckbox");
+
+// Event binds
+numero.addEventListener("input", checkInputLength);
+calculoBtn.addEventListener("click", calcularPrimos);
+graficoCheckbox.addEventListener("change", toggleGrafico);
+segurancaCheckbox.addEventListener("change", toggleSegurança);
 
 // Mantém o estado do gráfico chart.js
 // Usado para limpar o gráfico entre cálculos
@@ -61,7 +73,7 @@ function calcularPrimos() {
   let primosAteNumero = [0, 1];
 
   if (fazerGrafico) {
-    for (index = 3; index < numero.value; index += 2) {
+    for (let index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
@@ -69,7 +81,7 @@ function calcularPrimos() {
       primosAteNumero.push(numerosPrimos.length);
     }
   } else {
-    for (index = 3; index < numero.value; index += 2) {
+    for (let index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
@@ -77,7 +89,7 @@ function calcularPrimos() {
   }
 
   const fimCalculo = new Date();
-  TxtNumerosPrimos.innerHTML = numerosPrimos;
+  NumerosPrimosTxt.innerHTML = numerosPrimos;
 
   if (numerosPrimos.length > 0) {
     M.toast({
@@ -137,7 +149,7 @@ function desenharGrafico(numero, numerosAtePrimo) {
 
 // Verifica se o número é primo
 function ePrimo(numero) {
-  for (i = 2; i < numero; i++) {
+  for (let i = 2; i < numero; i++) {
     if (numero % i == 0) {
       return false;
     }
