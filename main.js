@@ -56,14 +56,14 @@ function calcularPrimos() {
   let numerosAtePrimo = [];
 
   if (fazerGrafico) {
-    for (index = 0; index < numero.value; index++) {
+    for (index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
       numerosAtePrimo.push(numerosPrimos.length);
     }
   } else {
-    for (index = 0; index < numero.value; index++) {
+    for (index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
