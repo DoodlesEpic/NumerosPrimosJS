@@ -1,6 +1,7 @@
 import path from "path";
 
 export default {
+  base: "/NumerosPrimosJS/",
   root: "src",
   build: {
     outDir: "../dist",
