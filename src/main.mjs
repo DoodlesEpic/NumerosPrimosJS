@@ -7,6 +7,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  Tooltip,
 } from "chart.js";
 
 Chart.register(
@@ -14,7 +15,8 @@ Chart.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement
+  LineElement,
+  Tooltip
 );
 
 // DOM
