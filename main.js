@@ -52,15 +52,16 @@ function calcularPrimos() {
   M.Toast.dismissAll();
   const inicioCalculo = new Date();
 
-  let numerosPrimos = [];
-  let numerosAtePrimo = [];
+  // Dois é o único primo par, então fica prefixado
+  let numerosPrimos = [2];
+  let primosAteNumero = [0, 0, 1];
 
   if (fazerGrafico) {
     for (index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
-      numerosAtePrimo.push(numerosPrimos.length);
+      primosAteNumero.push(numerosPrimos.length);
     }
   } else {
     for (index = 3; index < numero.value; index += 2) {
@@ -88,7 +89,7 @@ function calcularPrimos() {
   }
 
   if (fazerGrafico) {
-    desenharGrafico(numero, numerosAtePrimo);
+    desenharGrafico(numero, primosAteNumero);
   }
 }
 
