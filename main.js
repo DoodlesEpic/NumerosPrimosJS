@@ -88,40 +88,44 @@ function calcularPrimos() {
   }
 
   if (fazerGrafico) {
-    let numerosLabels = [];
+    desenharGrafico(numero);
+  }
+}
 
-    for (var i = 1; i <= numero.value; i++) {
-      numerosLabels.push(i);
-    }
+function desenharGrafico(numero) {
+  let numerosLabels = [];
 
-    const ctx = document.querySelector("#myChart").getContext("2d");
-    const chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: "line",
+  for (let i = 1; i <= numero.value; i++) {
+    numerosLabels.push(i);
+  }
 
-      // The data for our dataset
-      data: {
-        labels: numerosLabels,
-        datasets: [
-          {
-            label: "Números primos até o número",
-            backgroundColor: "rgb(255, 99, 132)",
-            borderColor: "rgb(255, 99, 132)",
-            data: numerosAtePrimo,
-          },
-        ],
-      },
+  const ctx = document.querySelector("#myChart").getContext("2d");
+  const chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: "line",
 
-      // Configuration options go here
-      options: {
-        elements: {
-          line: {
-            tension: 0, // disables bezier curves
-          },
+    // The data for our dataset
+    data: {
+      labels: numerosLabels,
+      datasets: [
+        {
+          label: "Números primos até o número",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: numerosAtePrimo,
+        },
+      ],
+    },
+
+    // Configuration options go here
+    options: {
+      elements: {
+        line: {
+          tension: 0, // disables bezier curves
         },
       },
-    });
-  }
+    },
+  });
 }
 
 // Verifica se o número é primo
