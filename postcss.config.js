@@ -4,6 +4,9 @@ export default {
   plugins: [
     purgecss({
       content: ["./**/*.html"],
+      safelist: {
+        greedy: [/toast/, /label/],
+      },
     }),
   ],
 };
