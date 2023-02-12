@@ -54,7 +54,7 @@ function calcularPrimos() {
 
   // Dois é o único primo par, então fica prefixado
   let numerosPrimos = [2];
-  let primosAteNumero = [0, 0, 1];
+  let primosAteNumero = [0, 1, 2];
 
   if (fazerGrafico) {
     for (index = 3; index < numero.value; index += 2) {
