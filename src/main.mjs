@@ -21,11 +21,11 @@ Chart.register(
 const numero = document.querySelector("#numero");
 const calculoBtn = document.querySelector("#botao");
 const NumerosPrimosTxt = document.querySelector("#numeros_primos");
-const NumerosPrimosQuantosTxt = document.querySelector(
-  "#numeros_primos_quantos"
-);
 const graficoCheckbox = document.querySelector("#graficoCheckbox");
 const segurancaCheckbox = document.querySelector("#segurancaCheckbox");
+const segurancaLabel = document.querySelector("#limiteSegurancaLabel");
+const graficoLabel = document.querySelector("#graficoLabel");
+const botao = document.querySelector("#botao");
 
 // Event binds
 numero.addEventListener("input", checkInputLength);
@@ -44,24 +44,13 @@ let fazerGrafico = true;
 // Desabilita o limite de 5 dígitos para o número a calcular
 // Quando desabilitado há uma chance alta de o web app travar
 function toggleSegurança() {
-  const segurancaLabel = document.querySelector("#limiteSegurancaLabel");
-  const graficoLabel = document.querySelector("#graficoLabel");
-  const botao = document.querySelector("#botao");
+  segurancaLabel.classList.toggle("red-text");
+  graficoLabel.classList.toggle("red-text");
+  botao.classList.toggle("red");
 
-  if (maxlength == 5) {
-    maxlength = 32;
-    segurancaLabel.classList.add("red-text");
-    graficoLabel.classList.add("red-text");
-    botao.classList.add("red");
-    graficoCheckbox.checked = false;
-  } else {
-    maxlength = 5;
-    if (numero.value.length > maxlength)
-      numero.value = numero.value.slice(0, maxlength);
-    segurancaLabel.classList.remove("red-text");
-    graficoLabel.classList.remove("red-text");
-    botao.classList.remove("red");
-  }
+  graficoCheckbox.checked = false;
+  maxlength = maxlength === 5 ? 32 : 5;
+  numero.value = numero.value.slice(0, maxlength);
 }
 
 // Alterna a exibição do gráfico
