@@ -6,6 +6,10 @@ const TxtNumerosPrimosQuantos = document.querySelector(
 );
 const graficoCheckbox = document.querySelector("#graficoCheckbox");
 
+// Mantém o estado do gráfico chart.js
+// Usado para limpar o gráfico entre cálculos
+let grafico;
+
 // Config
 let maxlength = 5;
 let fazerGrafico = true;
@@ -95,18 +99,19 @@ function calcularPrimos() {
 }
 
 function desenharGrafico(numero, numerosAtePrimo) {
+  // Gerar o eixo X do gráfico
   let numerosLabels = [];
-
   for (let i = 1; i <= numero.value; i++) {
     numerosLabels.push(i);
   }
 
-  const ctx = document.querySelector("#myChart").getContext("2d");
-  const chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: "line",
+  // Limpar gráfico anterior
+  if (grafico) grafico.destroy();
 
-    // The data for our dataset
+  // Desenhar novo gráfico
+  const ctx = document.querySelector("#myChart").getContext("2d");
+  grafico = new Chart(ctx, {
+    type: "line",
     data: {
       labels: numerosLabels,
       datasets: [
