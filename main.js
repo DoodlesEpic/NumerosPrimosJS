@@ -54,13 +54,14 @@ function calcularPrimos() {
 
   // Dois é o único primo par, então fica prefixado
   let numerosPrimos = [2];
-  let primosAteNumero = [0, 1, 2];
+  let primosAteNumero = [0, 1];
 
   if (fazerGrafico) {
     for (index = 3; index < numero.value; index += 2) {
       if (ePrimo(index) == true) {
         numerosPrimos.push(index);
       }
+      primosAteNumero.push(numerosPrimos.length);
       primosAteNumero.push(numerosPrimos.length);
     }
   } else {
