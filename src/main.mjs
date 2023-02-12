@@ -66,8 +66,13 @@ function checkInputLength() {
 }
 
 function calcularPrimos() {
-  if (numero.value < 0)
+  if (!numero.value) {
+    return toast({ text: "Nulo! Insira um valor" });
+  }
+
+  if (numero.value < 0) {
     return toast({ text: "Negativo! Insira um número positivo" });
+  }
 
   Toast.dismissAll();
   const inicioCalculo = new Date();
@@ -76,38 +81,29 @@ function calcularPrimos() {
   let numerosPrimos = [2];
   let primosAteNumero = [0, 1];
 
-  if (fazerGrafico) {
-    for (let index = 3; index < numero.value; index += 2) {
-      if (ePrimo(index)) {
-        numerosPrimos.push(index);
-      }
-      primosAteNumero.push(numerosPrimos.length);
-      primosAteNumero.push(numerosPrimos.length);
+  // Calcular todos os números primos até o número
+  for (let index = 3; index < numero.value; index += 2) {
+    if (ePrimo(index)) {
+      numerosPrimos.push(index);
     }
-  } else {
-    for (let index = 3; index < numero.value; index += 2) {
-      if (ePrimo(index)) {
-        numerosPrimos.push(index);
-      }
-    }
+
+    // Como pulamos os números pares, precisamos adicionar duas vezes
+    primosAteNumero.push(numerosPrimos.length);
+    primosAteNumero.push(numerosPrimos.length);
   }
 
   const fimCalculo = new Date();
   NumerosPrimosTxt.innerHTML = numerosPrimos;
 
-  if (numerosPrimos.length > 0) {
-    toast({
-      text: "Calculados " + numerosPrimos.length + " números primos!",
-    });
-    toast({
-      text:
-        "Tempo de execução: " +
-        (fimCalculo - inicioCalculo) / 1000 +
-        " segundos",
-    });
-  } else {
-    toast({ text: "Nulo! Insira um valor" });
-  }
+  toast({
+    text: "Calculados " + numerosPrimos.length + " números primos!",
+  });
+  toast({
+    text:
+      "Tempo de execução: " +
+      (fimCalculo.getMilliseconds() - inicioCalculo.getMilliseconds()) / 1000 +
+      " segundos",
+  });
 
   if (fazerGrafico) {
     desenharGrafico(numero, primosAteNumero);
@@ -139,12 +135,10 @@ function desenharGrafico(numero, numerosAtePrimo) {
         },
       ],
     },
-
-    // Configuration options go here
     options: {
       elements: {
         line: {
-          tension: 0, // disables bezier curves
+          tension: 0, // Desabilitar curvas suavizadas
         },
       },
     },
