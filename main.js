@@ -47,7 +47,7 @@ function checkInputLength() {
 
 function calcularPrimos() {
   if (numero.value < 0)
-    return M.toast({ html: "Negativo! Insira um número positivo" });
+    return M.toast({ text: "Negativo! Insira um número positivo" });
 
   M.Toast.dismissAll();
   const inicioCalculo = new Date();
@@ -75,16 +75,16 @@ function calcularPrimos() {
 
   if (numerosPrimos.length > 0) {
     M.toast({
-      html: "Calculados " + numerosPrimos.length + " números primos!",
+      text: "Calculados " + numerosPrimos.length + " números primos!",
     });
     M.toast({
-      html:
+      text:
         "Tempo de execução: " +
         (fimCalculo - inicioCalculo) / 1000 +
         " segundos",
     });
   } else {
-    M.toast({ html: "Nulo! Insira um valor" });
+    M.toast({ text: "Nulo! Insira um valor" });
   }
 
   if (fazerGrafico) {
