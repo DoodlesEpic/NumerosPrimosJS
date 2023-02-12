@@ -1,13 +1,27 @@
-.break-text {
-    word-break: break-all
-}
-
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 main {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
+}
+
+.break-text {
+  word-break: break-all;
+}
+
+.card-title {
+  margin-bottom: 25px;
+}
+
+#numero {
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+#botao {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
