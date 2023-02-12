@@ -88,11 +88,11 @@ function calcularPrimos() {
   }
 
   if (fazerGrafico) {
-    desenharGrafico(numero);
+    desenharGrafico(numero, numerosAtePrimo);
   }
 }
 
-function desenharGrafico(numero) {
+function desenharGrafico(numero, numerosAtePrimo) {
   let numerosLabels = [];
 
   for (let i = 1; i <= numero.value; i++) {
