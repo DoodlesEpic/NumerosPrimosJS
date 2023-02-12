@@ -1,201 +1,229 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
+  <head>
     <title>Calculador de números primos</title>
-    <meta name="description" content="Saiba todos os números primos até certo número">
+    <meta
+      name="description"
+      content="Saiba todos os números primos até certo número"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
-</head>
-<style>
-    .break-text {
-        word-break: break-all
-    }
-
-    body {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-    }
-
-    main {
-        flex: 1 0 auto;
-    }
-</style>
-
-<body>
+  </head>
+  <body>
     <main>
-        <div class="col">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title" style="margin-bottom: 25px">Calcule os números primos</span>
-                    <div class="input-field col s6">
-                        <input style="border-radius: 10px; padding-left: 10px" id="numero" type="number"
-                            oninput="checkInputLength()">
-                        <label for="numero">Número</label>
-                    </div>
-                    <blockquote class="red-text">
-                        <strong>Cuidado ao calcular números com mais de 5 algarismos! O tempo de execução pode passar de
-                            20 segundos e congelar a navegação.</strong>
-                    </blockquote>
-                    <label>Opções</label>
-                    <div style="margin-top: 20px;">
-                        <label>
-                            <input type="checkbox" checked="checked" onchange="toggleSegurança()" />
-                            <span id="limiteSegurancaLabel">Ativar limite de segurança de 5 dígitos</span>
-                        </label>
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <label>
-                            <input id="graficoCheckbox" type="checkbox" checked="checked" onchange="toggleGrafico()" />
-                            <span id="graficoLabel">Gerar gráfico</span>
-                        </label>
-                    </div>
-                    <a onclick="calcularPrimos()" id="botao" style="margin-top: 20px; margin-bottom: 10px"
-                        class="btn">Calcular!</a>
-                    <p>Os números primos até aqui são: </p>
-                    <p id="numeros_primos" class="break-text">0</p>
-                </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title" style="margin-bottom: 25px"
+              >Calcule os números primos</span
+            >
+            <div class="input-field col s6">
+              <input
+                style="border-radius: 10px; padding-left: 10px"
+                id="numero"
+                type="number"
+                oninput="checkInputLength()"
+              />
+              <label for="numero">Número</label>
             </div>
+            <blockquote class="red-text">
+              <strong
+                >Cuidado ao calcular números com mais de 5 algarismos! O tempo
+                de execução pode passar de 20 segundos e congelar a
+                navegação.</strong
+              >
+            </blockquote>
+            <label>Opções</label>
+            <div style="margin-top: 20px">
+              <label>
+                <input
+                  type="checkbox"
+                  checked="checked"
+                  onchange="toggleSegurança()"
+                />
+                <span id="limiteSegurancaLabel"
+                  >Ativar limite de segurança de 5 dígitos</span
+                >
+              </label>
+            </div>
+            <div style="margin-top: 20px">
+              <label>
+                <input
+                  id="graficoCheckbox"
+                  type="checkbox"
+                  checked="checked"
+                  onchange="toggleGrafico()"
+                />
+                <span id="graficoLabel">Gerar gráfico</span>
+              </label>
+            </div>
+            <a
+              onclick="calcularPrimos()"
+              id="botao"
+              style="margin-top: 20px; margin-bottom: 10px"
+              class="btn"
+              >Calcular!</a
+            >
+            <p>Os números primos até aqui são:</p>
+            <p id="numeros_primos" class="break-text">0</p>
+          </div>
         </div>
+      </div>
     </main>
     <canvas id="myChart"></canvas>
     <footer class="page-footer teal darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Calculador de números primos</h5>
+            <p class="grey-text text-lighten-4">
+              Saiba todos os números primos até certo número
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright z-depth-5 teal">
         <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Calculador de números primos</h5>
-                    <p class="grey-text text-lighten-4">Saiba todos os números primos até certo número</p>
-                </div>
-            </div>
+          © 2019 Eduardo Lima Moraes, todos os direitos reservados
         </div>
-        <div class="footer-copyright z-depth-5 teal">
-            <div class="container">
-                © 2019 Eduardo Lima Moraes, todos os direitos reservados
-            </div>
-        </div>
+      </div>
     </footer>
-</body>
+  </body>
 
-<script>
+  <script>
     let maxlength = 5;
     let fazerGrafico = true;
     let numero = document.getElementById("numero");
     let TxtNumerosPrimos = document.getElementById("numeros_primos");
-    let TxtNumerosPrimosQuantos = document.getElementById("numeros_primos_quantos");
+    let TxtNumerosPrimosQuantos = document.getElementById(
+      "numeros_primos_quantos"
+    );
 
     function toggleSegurança() {
-        let segurancaLabel = document.getElementById("limiteSegurancaLabel");
-        let graficoLabel = document.getElementById("graficoLabel");
-        let graficoCheckbox = document.getElementById("graficoCheckbox");
-        let botao = document.getElementById("botao");
-        if (maxlength == 5) {
-            maxlength = 32;
-            segurancaLabel.classList.add("red-text");
-            graficoLabel.classList.add("red-text");
-            botao.classList.add("red");
-            graficoCheckbox.checked = false;
-        } else {
-            maxlength = 5;
-            if (numero.value.length > maxlength) numero.value = numero.value.slice(0, maxlength);
-            segurancaLabel.classList.remove("red-text");
-            graficoLabel.classList.remove("red-text");
-            botao.classList.remove("red");
-        }
+      let segurancaLabel = document.getElementById("limiteSegurancaLabel");
+      let graficoLabel = document.getElementById("graficoLabel");
+      let graficoCheckbox = document.getElementById("graficoCheckbox");
+      let botao = document.getElementById("botao");
+      if (maxlength == 5) {
+        maxlength = 32;
+        segurancaLabel.classList.add("red-text");
+        graficoLabel.classList.add("red-text");
+        botao.classList.add("red");
+        graficoCheckbox.checked = false;
+      } else {
+        maxlength = 5;
+        if (numero.value.length > maxlength)
+          numero.value = numero.value.slice(0, maxlength);
+        segurancaLabel.classList.remove("red-text");
+        graficoLabel.classList.remove("red-text");
+        botao.classList.remove("red");
+      }
     }
 
     function toggleGrafico() {
-        fazerGrafico = document.getElementById('graficoCheckbox').checked;
+      fazerGrafico = document.getElementById("graficoCheckbox").checked;
     }
-    
 
     function checkInputLength() {
-        if (numero.value.length > maxlength) numero.value = numero.value.slice(0, maxlength);
+      if (numero.value.length > maxlength)
+        numero.value = numero.value.slice(0, maxlength);
     }
 
     function calcularPrimos() {
-        M.Toast.dismissAll();
-        let inicioCalculo = new Date();
+      M.Toast.dismissAll();
+      let inicioCalculo = new Date();
 
-        let numerosPrimos = []
-        let numerosAtePrimo = []
-        if(fazerGrafico) {
-            for (index = 0; index < numero.value; index++) {
-                if (ePrimo(index) == true) {
-                    numerosPrimos.push(index);
-                }
-                numerosAtePrimo.push(numerosPrimos.length);
-            }
-        } else {
-            for (index = 0; index < numero.value; index++) {
-                if (ePrimo(index) == true) {
-                    numerosPrimos.push(index);
-                }
-            }
+      let numerosPrimos = [];
+      let numerosAtePrimo = [];
+      if (fazerGrafico) {
+        for (index = 0; index < numero.value; index++) {
+          if (ePrimo(index) == true) {
+            numerosPrimos.push(index);
+          }
+          numerosAtePrimo.push(numerosPrimos.length);
+        }
+      } else {
+        for (index = 0; index < numero.value; index++) {
+          if (ePrimo(index) == true) {
+            numerosPrimos.push(index);
+          }
+        }
+      }
+
+      TxtNumerosPrimos.innerHTML = numerosPrimos;
+      let fimCalculo = new Date();
+      if (numerosPrimos.length > 0) {
+        M.toast({
+          html: "Calculados " + numerosPrimos.length + " números primos!",
+        });
+        M.toast({
+          html:
+            "Tempo de execução: " +
+            (fimCalculo - inicioCalculo) / 1000 +
+            " segundos",
+        });
+      } else if (numero.value < 0) {
+        M.toast({ html: "Negativo! Insira um número positivo" });
+      } else {
+        M.toast({ html: "Nulo! Insira um valor" });
+      }
+
+      if (fazerGrafico) {
+        var numerosLabels = [];
+
+        for (var i = 1; i <= numero.value; i++) {
+          numerosLabels.push(i);
         }
 
-        TxtNumerosPrimos.innerHTML = numerosPrimos;
-        let fimCalculo = new Date();
-        if (numerosPrimos.length > 0) {
-            M.toast({ html: 'Calculados ' + numerosPrimos.length + " números primos!" })
-            M.toast({ html: 'Tempo de execução: ' + (fimCalculo - inicioCalculo) / 1000 + ' segundos' })
-        } else if (numero.value < 0) {
-            M.toast({ html: 'Negativo! Insira um número positivo' })
-        }
-        else {
-            M.toast({ html: 'Nulo! Insira um valor' })
-        }
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: "line",
 
-        if(fazerGrafico) {
-            var numerosLabels = [];
+          // The data for our dataset
+          data: {
+            labels: numerosLabels,
+            datasets: [
+              {
+                label: "Números primos até o número",
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+                data: numerosAtePrimo,
+              },
+            ],
+          },
 
-            for(var i = 1; i <= numero.value; i++) {
-                numerosLabels.push(i);
-            }
-
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'line',
-
-                // The data for our dataset
-                data: {
-                    labels: numerosLabels,
-                    datasets: [{
-                        label: 'Números primos até o número',
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: numerosAtePrimo
-                    }]
-                },
-
-                // Configuration options go here
-                options: {
-                    elements: {
-                        line: {
-                            tension: 0 // disables bezier curves
-                        }
-                    }       
-                }
-            });
-        }
+          // Configuration options go here
+          options: {
+            elements: {
+              line: {
+                tension: 0, // disables bezier curves
+              },
+            },
+          },
+        });
+      }
     }
 
     function ePrimo(numero) {
-        for (i = 2; i < numero; i++) {
-            if (numero % i == 0) {
-                return false;
-            }
+      for (i = 2; i < numero; i++) {
+        if (numero % i == 0) {
+          return false;
         }
-        return true;
+      }
+      return true;
     }
-</script>
+  </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
 </html>
