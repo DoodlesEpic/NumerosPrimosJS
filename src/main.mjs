@@ -89,7 +89,7 @@ function calcularPrimos() {
 
   if (fazerGrafico) {
     for (let index = 3; index < numero.value; index += 2) {
-      if (ePrimo(index) == true) {
+      if (ePrimo(index)) {
         numerosPrimos.push(index);
       }
       primosAteNumero.push(numerosPrimos.length);
@@ -97,7 +97,7 @@ function calcularPrimos() {
     }
   } else {
     for (let index = 3; index < numero.value; index += 2) {
-      if (ePrimo(index) == true) {
+      if (ePrimo(index)) {
         numerosPrimos.push(index);
       }
     }
