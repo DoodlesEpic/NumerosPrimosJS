@@ -1,14 +1,22 @@
+// DOM
+const numero = document.querySelector("#numero");
+const TxtNumerosPrimos = document.querySelector("#numeros_primos");
+const TxtNumerosPrimosQuantos = document.querySelector(
+  "#numeros_primos_quantos"
+);
+const graficoCheckbox = document.querySelector("#graficoCheckbox");
+
+// Config
 let maxlength = 5;
 let fazerGrafico = true;
-let numero = document.getElementById("numero");
-let TxtNumerosPrimos = document.getElementById("numeros_primos");
-let TxtNumerosPrimosQuantos = document.getElementById("numeros_primos_quantos");
 
+// Desabilita o limite de 5 dígitos para o número a calcular
+// Quando desabilitado há uma chance alta de o web app travar
 function toggleSegurança() {
-  let segurancaLabel = document.getElementById("limiteSegurancaLabel");
-  let graficoLabel = document.getElementById("graficoLabel");
-  let graficoCheckbox = document.getElementById("graficoCheckbox");
-  let botao = document.getElementById("botao");
+  const segurancaLabel = document.querySelector("#limiteSegurancaLabel");
+  const graficoLabel = document.querySelector("#graficoLabel");
+  const botao = document.querySelector("#botao");
+
   if (maxlength == 5) {
     maxlength = 32;
     segurancaLabel.classList.add("red-text");
@@ -25,21 +33,28 @@ function toggleSegurança() {
   }
 }
 
+// Alterna a exibição do gráfico
 function toggleGrafico() {
-  fazerGrafico = document.getElementById("graficoCheckbox").checked;
+  fazerGrafico = graficoCheckbox.checked;
 }
 
+// Limita o número a calcular para o número de dígitos
+// O valor depende de o limite de segurança estar ativado ou não
 function checkInputLength() {
   if (numero.value.length > maxlength)
     numero.value = numero.value.slice(0, maxlength);
 }
 
 function calcularPrimos() {
+  if (numero.value < 0)
+    return M.toast({ html: "Negativo! Insira um número positivo" });
+
   M.Toast.dismissAll();
-  let inicioCalculo = new Date();
+  const inicioCalculo = new Date();
 
   let numerosPrimos = [];
   let numerosAtePrimo = [];
+
   if (fazerGrafico) {
     for (index = 0; index < numero.value; index++) {
       if (ePrimo(index) == true) {
@@ -55,8 +70,9 @@ function calcularPrimos() {
     }
   }
 
+  const fimCalculo = new Date();
   TxtNumerosPrimos.innerHTML = numerosPrimos;
-  let fimCalculo = new Date();
+
   if (numerosPrimos.length > 0) {
     M.toast({
       html: "Calculados " + numerosPrimos.length + " números primos!",
@@ -67,21 +83,19 @@ function calcularPrimos() {
         (fimCalculo - inicioCalculo) / 1000 +
         " segundos",
     });
-  } else if (numero.value < 0) {
-    M.toast({ html: "Negativo! Insira um número positivo" });
   } else {
     M.toast({ html: "Nulo! Insira um valor" });
   }
 
   if (fazerGrafico) {
-    var numerosLabels = [];
+    let numerosLabels = [];
 
     for (var i = 1; i <= numero.value; i++) {
       numerosLabels.push(i);
     }
 
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var chart = new Chart(ctx, {
+    const ctx = document.querySelector("#myChart").getContext("2d");
+    const chart = new Chart(ctx, {
       // The type of chart we want to create
       type: "line",
 
@@ -110,6 +124,7 @@ function calcularPrimos() {
   }
 }
 
+// Verifica se o número é primo
 function ePrimo(numero) {
   for (i = 2; i < numero; i++) {
     if (numero % i == 0) {
