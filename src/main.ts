@@ -20,14 +20,28 @@ Chart.register(
 );
 
 // DOM
-const numero = document.querySelector("#numero");
-const calculoBtn = document.querySelector("#botao");
-const NumerosPrimosTxt = document.querySelector("#numeros_primos");
-const graficoCheckbox = document.querySelector("#graficoCheckbox");
-const segurancaCheckbox = document.querySelector("#segurancaCheckbox");
-const segurancaLabel = document.querySelector("#limiteSegurancaLabel");
-const graficoLabel = document.querySelector("#graficoLabel");
-const botao = document.querySelector("#botao");
+const numero: HTMLInputElement =
+  document.querySelector("#numero") || document.createElement("input");
+
+const graficoCheckbox: HTMLInputElement =
+  document.querySelector("#graficoCheckbox") || document.createElement("input");
+
+const segurancaCheckbox: HTMLInputElement =
+  document.querySelector("#segurancaCheckbox") ||
+  document.createElement("input");
+
+const calculoBtn: HTMLAnchorElement =
+  document.querySelector("#botao") || document.createElement("a");
+
+const NumerosPrimosTxt: HTMLParagraphElement =
+  document.querySelector("#numeros_primos") || document.createElement("p");
+
+const segurancaLabel: HTMLSpanElement =
+  document.querySelector("#limiteSegurancaLabel") ||
+  document.createElement("span");
+
+const graficoLabel: HTMLSpanElement =
+  document.querySelector("#graficoLabel") || document.createElement("span");
 
 // Event binds
 numero.addEventListener("input", limitarInput);
@@ -37,7 +51,7 @@ segurancaCheckbox.addEventListener("change", toggleSegurança);
 
 // Mantém o estado do gráfico chart.js
 // Usado para limpar o gráfico entre cálculos
-let grafico;
+let grafico: Chart<"line", number[], number>;
 
 // Config
 let maxlength = 5;
@@ -48,7 +62,7 @@ let fazerGrafico = true;
 function toggleSegurança() {
   segurancaLabel.classList.toggle("red-text");
   graficoLabel.classList.toggle("red-text");
-  botao.classList.toggle("red");
+  calculoBtn.classList.toggle("red");
 
   graficoCheckbox.checked = false;
   maxlength = maxlength === 5 ? 32 : 5;
@@ -71,15 +85,17 @@ function calcularPrimos() {
     return toast({ text: "Nulo! Insira um valor" });
   }
 
-  if (numero.value < 0) {
+  if (parseFloat(numero.value) < 0) {
     return toast({ text: "Negativo! Insira um número positivo" });
   }
 
   Toast.dismissAll();
   const inicioCalculo = new Date();
-  const [numerosPrimos, primosAteNumero] = crivoEratostenes(numero.value);
+  const [numerosPrimos, primosAteNumero] = crivoEratostenes(
+    parseInt(numero.value)
+  );
   const fimCalculo = new Date();
-  NumerosPrimosTxt.innerHTML = numerosPrimos;
+  NumerosPrimosTxt.innerHTML = numerosPrimos.toString();
 
   toast({
     text: "Calculados " + numerosPrimos.length + " números primos!",
@@ -92,14 +108,14 @@ function calcularPrimos() {
   });
 
   if (fazerGrafico) {
-    desenharGrafico(numero, primosAteNumero);
+    desenharGrafico(parseInt(numero.value), primosAteNumero);
   }
 }
 
-function desenharGrafico(numero, numerosAtePrimo) {
+function desenharGrafico(numero: number, numerosAtePrimo: number[]) {
   // Gerar o eixo X do gráfico
-  let numerosLabels = [];
-  for (let i = 1; i <= numero.value; i++) {
+  let numerosLabels: number[] = [];
+  for (let i = 1; i <= numero; i++) {
     numerosLabels.push(i);
   }
 
@@ -107,8 +123,9 @@ function desenharGrafico(numero, numerosAtePrimo) {
   if (grafico) grafico.destroy();
 
   // Desenhar novo gráfico
-  const ctx = document.querySelector("#myChart").getContext("2d");
-  grafico = new Chart(ctx, {
+  const item: HTMLCanvasElement =
+    document.querySelector("#myChart") || document.createElement("canvas");
+  grafico = new Chart(item, {
     type: "line",
     data: {
       labels: numerosLabels,
@@ -131,10 +148,10 @@ function desenharGrafico(numero, numerosAtePrimo) {
   });
 }
 
-function crivoEratostenes(n) {
+function crivoEratostenes(n: number) {
   // Array que armazena todos os números até o n
   // O próximo passo será marcar os não primos nessa lista
-  let numeros = [];
+  let numeros: boolean[] = [];
   for (let i = 0; i < n; i++) {
     numeros.push(true);
   }
@@ -151,8 +168,8 @@ function crivoEratostenes(n) {
 
   // Todos itens setados como true são primos
   // Criamos um novo array que apenas contém os números primos
-  let primos = [];
-  let primosAteNumero = [];
+  let primos: number[] = [];
+  let primosAteNumero: number[] = [];
   for (let i = 2; i < n; i++) {
     // O número de primos até certo número é usado para o desenho do gráfico
     primosAteNumero.push(primos.length);
