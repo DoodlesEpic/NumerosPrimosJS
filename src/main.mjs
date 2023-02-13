@@ -102,7 +102,7 @@ function calcularPrimos() {
   toast({
     text:
       "Tempo de execução: " +
-      (fimCalculo.getMilliseconds() - inicioCalculo.getMilliseconds()) / 1000 +
+      (fimCalculo.getTime() - inicioCalculo.getTime()) / 1000 +
       " segundos",
   });
 
