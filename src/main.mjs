@@ -77,22 +77,7 @@ function calcularPrimos() {
 
   Toast.dismissAll();
   const inicioCalculo = new Date();
-
-  // Dois é o único primo par, então fica prefixado
-  let numerosPrimos = [2];
-  let primosAteNumero = [0, 1];
-
-  // Calcular todos os números primos até o número
-  for (let index = 3; index < numero.value; index += 2) {
-    if (ePrimo(index)) {
-      numerosPrimos.push(index);
-    }
-
-    // Como pulamos os números pares, precisamos adicionar duas vezes
-    primosAteNumero.push(numerosPrimos.length);
-    primosAteNumero.push(numerosPrimos.length);
-  }
-
+  const [numerosPrimos, primosAteNumero] = crivoEratostenes(numero.value);
   const fimCalculo = new Date();
   NumerosPrimosTxt.innerHTML = numerosPrimos;
 
@@ -146,12 +131,35 @@ function desenharGrafico(numero, numerosAtePrimo) {
   });
 }
 
-// Verifica se o número é primo
-function ePrimo(numero) {
-  for (let i = 2; i <= Math.sqrt(numero); i++) {
-    if (numero % i == 0) {
-      return false;
-    }
+function crivoEratostenes(n) {
+  // Array que armazena todos os números até o n
+  // O próximo passo será marcar os não primos nessa lista
+  let numeros = [];
+  for (let i = 0; i < n; i++) {
+    numeros.push(true);
   }
-  return true;
+
+  // Marcamos os múltiplos de primos
+  // Todos números marcados como false NÃO são primos
+  const limite = Math.sqrt(n);
+  for (let i = 2; i <= limite; i++) {
+    if (numeros[i])
+      for (let j = i * i; j < n; j += i) {
+        numeros[j] = false;
+      }
+  }
+
+  // Todos itens setados como true são primos
+  // Criamos um novo array que apenas contém os números primos
+  let primos = [];
+  let primosAteNumero = [];
+  for (let i = 2; i < n; i++) {
+    // O número de primos até certo número é usado para o desenho do gráfico
+    primosAteNumero.push(primos.length);
+
+    // Apenas adicionamos ao resultado os números marcados primos
+    if (numeros[i]) primos.push(i);
+  }
+
+  return [primos, primosAteNumero];
 }
