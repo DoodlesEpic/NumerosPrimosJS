@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import crivoEratostenes from "../crivo";
+import crivoEratostenes from "./eratostenes";
 
 test("crivoEratostenes", () => {
   expect(crivoEratostenes(100)).toEqual([

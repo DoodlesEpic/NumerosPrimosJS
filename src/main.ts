@@ -1,5 +1,5 @@
 import "./style.scss";
-import crivoEratostenes from "./crivo";
+import crivoEratostenes from "./crivo/eratostenes";
 import { Toast, toast } from "@materializecss/materialize";
 import {
   Chart,
