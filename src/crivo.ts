@@ -1,3 +1,5 @@
+// Retorna todos os números primos até n, EXCLUINDO n
+// E retorna quantos números primos tem até cada número até n, começando no 1
 export default function crivoEratostenes(n: number) {
   // Array que armazena todos os números até o n
   // O próximo passo será marcar os não primos nessa lista
@@ -20,7 +22,7 @@ export default function crivoEratostenes(n: number) {
   // Criamos um novo array que apenas contém os números primos
   let primos: number[] = [];
   let primosAteNumero: number[] = [];
-  for (let i = 2; i < n; i++) {
+  for (let i = 2; i <= n; i++) {
     // O número de primos até certo número é usado para o desenho do gráfico
     primosAteNumero.push(primos.length);
 
