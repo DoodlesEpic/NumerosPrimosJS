@@ -82,34 +82,35 @@ function limitarInput() {
 }
 
 function calcularPrimos() {
-  if (!numero.value) {
-    return toast({ text: "Nulo! Insira um valor" });
-  }
+  try {
+    // Calcular números primos
+    const inicioCalculo = new Date();
+    const [numerosPrimos, primosAteNumero] = crivoEratostenes(
+      parseInt(numero.value)
+    );
+    const fimCalculo = new Date();
 
-  if (parseFloat(numero.value) < 0) {
-    return toast({ text: "Negativo! Insira um número positivo" });
-  }
+    // Mostrar os resultados e o tempo de execução
+    Toast.dismissAll();
+    NumerosPrimosTxt.innerHTML = numerosPrimos.toString();
+    toast({
+      text: "Calculados " + numerosPrimos.length + " números primos!",
+    });
+    toast({
+      text:
+        "Tempo de execução: " +
+        (fimCalculo.getTime() - inicioCalculo.getTime()) / 1000 +
+        " segundos",
+    });
 
-  Toast.dismissAll();
-  const inicioCalculo = new Date();
-  const [numerosPrimos, primosAteNumero] = crivoEratostenes(
-    parseInt(numero.value)
-  );
-  const fimCalculo = new Date();
-  NumerosPrimosTxt.innerHTML = numerosPrimos.toString();
-
-  toast({
-    text: "Calculados " + numerosPrimos.length + " números primos!",
-  });
-  toast({
-    text:
-      "Tempo de execução: " +
-      (fimCalculo.getTime() - inicioCalculo.getTime()) / 1000 +
-      " segundos",
-  });
-
-  if (fazerGrafico) {
-    desenharGrafico(parseInt(numero.value), primosAteNumero);
+    // Desenhar o gráfico se estiver habilitado
+    if (fazerGrafico) {
+      desenharGrafico(parseInt(numero.value), primosAteNumero);
+    }
+  } catch (erro) {
+    return toast({
+      text: erro instanceof Error ? erro.message : "Erro",
+    });
   }
 }
 

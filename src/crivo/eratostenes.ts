@@ -1,6 +1,10 @@
 // Retorna todos os números primos até n, EXCLUINDO n
 // E retorna quantos números primos tem até cada número até n, começando no 1
 export default function crivoEratostenes(n: number) {
+  if (n === 0) throw new Error("Número não pode ser 0");
+  if (n <= 0) throw new Error("Número não pode ser negativo");
+  if (!n) throw new Error("Favor informar um número");
+
   // Array que armazena todos os números até o n
   // O próximo passo será marcar os não primos nessa lista
   let numeros: boolean[] = [];

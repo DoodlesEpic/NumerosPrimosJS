@@ -29,16 +29,24 @@ describe("crivoEratostenes é correto com", () => {
   });
 
   test("zero", () => {
-    expect(crivoEratostenes(0)).toEqual([[], []]);
+    expect(() => crivoEratostenes(0)).toThrowError("Número não pode ser 0");
   });
 
   test("números negativos pequenos", () => {
-    expect(crivoEratostenes(-3)).toEqual([[], []]);
-    expect(crivoEratostenes(-2)).toEqual([[], []]);
+    expect(() => crivoEratostenes(-3)).toThrowError(
+      "Número não pode ser negativo"
+    );
+    expect(() => crivoEratostenes(-2)).toThrowError(
+      "Número não pode ser negativo"
+    );
   });
 
   test("números negativos", () => {
-    expect(crivoEratostenes(-50)).toEqual([[], []]);
-    expect(crivoEratostenes(-100)).toEqual([[], []]);
+    expect(() => crivoEratostenes(-50)).toThrowError(
+      "Número não pode ser negativo"
+    );
+    expect(() => crivoEratostenes(-100)).toThrowError(
+      "Número não pode ser negativo"
+    );
   });
 });
